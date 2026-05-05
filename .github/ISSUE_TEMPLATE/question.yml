@@ -1,0 +1,62 @@
+name: 💬 Question / Support
+description: Need help with setup, usage, or something that isn't a bug
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Happy to help! Please search existing issues first.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues
+          required: true
+
+  - type: dropdown
+    id: topic
+    attributes:
+      label: What is your question about?
+      options:
+        - Installation
+        - Setup / connect command
+        - Decrypt command
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: Be as specific as you can. What are you trying to do, and what's blocking you?
+      placeholder: I'm trying to... but I'm not sure how to...
+    validations:
+      required: true
+
+  - type: textarea
+    id: tried
+    attributes:
+      label: What have you already tried?
+      placeholder: I ran `fsi connect` and also checked...
+    validations:
+      required: false
+
+  - type: input
+    id: fsi_version
+    attributes:
+      label: formseal-inbox version
+      description: Run `fsi --version`
+      placeholder: e.g. v0.1.0
+    validations:
+      required: true
+
+  - type: input
+    id: install_method
+    attributes:
+      label: How did you install formseal-inbox?
+      placeholder: e.g. pipx install formseal-inbox
+    validations:
+      required: false
