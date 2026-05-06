@@ -1,9 +1,9 @@
-# fsi/cmd.py
+# fsd/cmd.py
 # Command registry
 
-from fsi.commands.config.config import run_status, run_disconnect
-from fsi.commands.connect.connect import run as run_connect
-from fsi.commands.decrypt.decrypt import run as run_decrypt
+from fsd.commands.config.config import run_status, run_disconnect
+from fsd.commands.connect.connect import run as run_connect
+from fsd.commands.decrypt.decrypt import run as run_decrypt
 
 
 COMMANDS = {

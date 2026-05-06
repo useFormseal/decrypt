@@ -9,13 +9,13 @@ project_root = script_dir.parent.parent
 sys.path.insert(0, str(project_root))
 os.chdir(project_root)
 
-from fsi.cmd import COMMANDS
-from fsi.general.aliases import resolve
-from fsi.general.errors import unknown_command, handle_interrupt, handle_exception
+from fsd.cmd import COMMANDS
+from fsd.general.aliases import resolve
+from fsd.general.errors import unknown_command, handle_interrupt, handle_exception
 
-from fsi.commands.general import about as cmd_about
-from fsi.commands.general import help as cmd_help
-from fsi.commands.general import version as cmd_version
+from fsd.commands.general import about as cmd_about
+from fsd.commands.general import help as cmd_help
+from fsd.commands.general import version as cmd_version
 
 
 def main():

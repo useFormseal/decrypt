@@ -1,6 +1,6 @@
 # ui/bodies.py
 
-from fsi.ui.styles import C, D, G, O, R, S, W, Y, BOLD, RED
+from fsd.ui.styles import C, D, G, O, R, S, W, Y, BOLD, RED
 
 
 def br():

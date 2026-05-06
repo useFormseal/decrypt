@@ -29,7 +29,7 @@ Thumbs.db
 # Build output
 dist/
 build/
-*.egg-info/
+*formseal_decrypt.egg-info/
 
 # Config
 *tree

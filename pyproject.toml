@@ -3,8 +3,8 @@ requires = ["setuptools>=65.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "formseal-inbox"
-version = "0.1.0"
+name = "formseal-decrypt"
+version = "0.0.0"
 description = "CLI tool for decrypting formseal ciphertexts"
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -18,16 +18,17 @@ dependencies = [
 ]
 
 [project.scripts]
-fsi = "fsi.fsi:main"
+fsd = "fsd.fsd:main"
 
 [tool.setuptools]
 packages = [
-    "fsi",
-    "fsi.ui",
-    "fsi.commands",
-    "fsi.commands.general",
-    "fsi.commands.config",
-    "fsi.commands.connect",
-    "fsi.commands.decrypt",
-    "fsi.security",
+    "fsd",
+    "fsd.ui",
+    "fsd.commands",
+    "fsd.commands.general",
+    "fsd.commands.config",
+    "fsd.commands.connect",
+    "fsd.commands.decrypt",
+    "fsd.security",
+    "fsd.formats",
 ]

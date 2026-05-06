@@ -10,9 +10,9 @@ try:
 except ImportError:
     HAS_KEYRING = False
 
-SERVICE = "formseal-inbox"
+SERVICE = "formseal-decrypt"
 
-CONFIG_DIR = Path.home() / ".config" / "formseal-inbox"
+CONFIG_DIR = Path.home() / ".config" / "formseal-decrypt"
 SECRETS_FILE = CONFIG_DIR / "secrets.json"
 
 

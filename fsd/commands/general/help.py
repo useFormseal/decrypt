@@ -1,27 +1,27 @@
 # commands/general/help.py
 # Help command - shows all available commands
 
-from fsi.ui import br, header, cmd_line, rule
-from fsi.ui.styles import C, G, R, W, GRAY
+from fsd.ui import br, header, cmd_line, rule
+from fsd.ui.styles import C, G, R, W, GRAY
 
 
 def _get_help_groups():
     return {
         "Connect": [
-            ("fsi connect", "configure source, destination, and private key"),
-            ("fsi disconnect", "clear configuration"),
-            ("fsi disconnect --wipe", "clear everything including messages"),
+            ("fsd connect", "configure source, destination, and private key"),
+            ("fsd disconnect", "clear configuration"),
+            ("fsd disconnect --wipe", "clear everything including messages"),
         ],
         "Decrypt": [
-            ("fsi decrypt", "decrypt ciphertexts"),
+            ("fsd decrypt", "decrypt ciphertexts"),
         ],
         "Info": [
-            ("fsi status", "show configuration"),
-            ("fsi --version", "show version"),
-            ("fsi --aliases", "list shorthand flags"),
+            ("fsd status", "show configuration"),
+            ("fsd --version", "show version"),
+            ("fsd --aliases", "list shorthand flags"),
         ],
         "Docs": [
-            ("https://github.com/grayguava/formseal-inbox", None),
+            ("https://github.com/useFormseal/decrypt", None),
         ],
     }
 

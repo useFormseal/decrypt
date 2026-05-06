@@ -5,11 +5,12 @@ import json
 import sys
 from pathlib import Path
 
-from fsi.ui import br, fail, ok, info, warn, G, W, D, C, Y, R, HEAD, header
-from fsi.security import keys
+from fsd.ui import br, fail, ok, info, warn, G, W, D, C, Y, R, HEAD, header
+from fsd.security import keys
+from fsd.formats import FORMATTERS
 
 
-CONFIG_DIR = Path.home() / ".config" / "formseal-inbox"
+CONFIG_DIR = Path.home() / ".config" / "formseal-decrypt"
 CONFIG_FILE = CONFIG_DIR / "config.json"
 
 
@@ -45,7 +46,7 @@ def run_status():
 
     source = cfg.get("source")
     if not source:
-        warn("Not configured. Run: fsi connect")
+        warn("Not configured. Run: fsd connect")
         br()
         return
 
@@ -56,6 +57,11 @@ def run_status():
 
     destination = cfg.get("destination")
     row("Destination:", destination or "(not set)", W if destination else D)
+
+    output_format = cfg.get("format", "jsonl")
+    formatter = FORMATTERS.get(output_format)
+    format_display = formatter.name if formatter else output_format
+    row("Format:", format_display, G)
 
     private_key = keys.load_private_key()
     if private_key:

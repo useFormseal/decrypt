@@ -6,9 +6,10 @@ from pathlib import Path
 import nacl.public
 import nacl.encoding
 
-from fsi.ui import br, fail, ok, info, warn, G, W, D, C, Y, R, HEAD, header
-from fsi.commands.config.config import load_config
-from fsi.security import keys
+from fsd.ui import br, fail, ok, info, warn, G, W, D, C, Y, R, HEAD, header
+from fsd.commands.config.config import load_config
+from fsd.security import keys
+from fsd.formats import get_formatter, get_extension
 
 
 def run(args):
@@ -16,18 +17,23 @@ def run(args):
 
     source = cfg.get("source")
     if not source:
-        fail("Not configured. Run: fsi connect")
+        fail("Not configured. Run: fsd connect")
 
     destination = cfg.get("destination")
     if not destination:
-        fail("Destination not set. Run: fsi connect")
+        fail("Destination not set. Run: fsd connect")
+
+    output_format = cfg.get("format", "jsonl")
+    formatter = get_formatter(output_format)
 
     private_key = keys.load_private_key()
     if not private_key:
-        fail("Private key not set. Run: fsi connect")
+        fail("Private key not set. Run: fsd connect")
 
     source_path = Path(source)
-    dest_path = Path(destination)
+    dest_dir = Path(destination)
+    ext = get_extension(output_format)
+    dest_path = dest_dir / f"formseal.decrypted.{ext}"
 
     if not source_path.exists():
         fail(f"Source file not found: {source}")
@@ -41,6 +47,7 @@ def run(args):
 
     row("Source:", str(source_path))
     row("Destination:", str(dest_path))
+    row("Format:", output_format)
 
     br()
 
@@ -68,10 +75,7 @@ def run(args):
                 failed += 1
 
     if decrypted:
-        dest_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(dest_path, "w", encoding="utf-8") as f:
-            for msg in decrypted:
-                f.write(json.dumps(msg, ensure_ascii=False) + "\n")
+        formatter.write(decrypted, dest_path)
 
     br()
     row("Processed:", total, G)

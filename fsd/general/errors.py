@@ -1,15 +1,15 @@
 # Error handlers
 
-from fsi.ui import fail, br
+from fsd.ui import fail, br
 
 
 def unknown_command(cmd):
     br()
-    fail(f"Unknown command: {cmd}\nRun 'fsi --help' for available commands")
+    fail(f"Unknown command: {cmd}\nRun 'fsd --help' for available commands")
 
 
 def handle_interrupt():
-    from fsi.ui import info
+    from fsd.ui import info
     br()
     info("Interrupted.")
     br()

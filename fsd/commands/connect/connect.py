@@ -3,9 +3,10 @@
 import sys
 from pathlib import Path
 
-from fsi.ui import br, fail, ok, info, warn, G, W, D, C, Y, O, R, HEAD, OK, header
-from fsi.commands.config.config import load_config, save_config
-from fsi.security import keys
+from fsd.ui import br, fail, ok, info, warn, G, W, D, C, Y, O, R, HEAD, OK, header
+from fsd.commands.config.config import load_config, save_config
+from fsd.security import keys
+from fsd.formats import FORMATTERS, get_format_names
 
 
 def _parse_args(args):
@@ -23,7 +24,7 @@ def run(args):
 
     cfg = load_config()
     if cfg.get("source"):
-        fail(f"Already configured.\nRun 'fsi disconnect' first.")
+        fail(f"Already configured.\nRun 'fsd disconnect' first.")
 
     print()
     header("setup")
@@ -34,11 +35,13 @@ def run(args):
     source = parsed.get("source")
     if not source:
         try:
-            sys.stdout.write(f"  Source File [ciphertexts.jsonl]: ")
+            sys.stdout.write(f"  Source File (ciphertexts): ")
             sys.stdout.flush()
             source = input().strip()
             if not source:
-                source = "ciphertexts.jsonl"
+                fail("Source file is required")
+            if not source.endswith(".jsonl"):
+                source = source + ".jsonl"
         except KeyboardInterrupt:
             br()
             info("Cancelled.")
@@ -48,16 +51,36 @@ def run(args):
     destination = parsed.get("destination")
     if not destination:
         try:
-            sys.stdout.write(f"  Destination File [decrypted.jsonl]: ")
+            sys.stdout.write(f"  Destination Directory: ")
             sys.stdout.flush()
             destination = input().strip()
             if not destination:
-                destination = "decrypted.jsonl"
+                destination = "."
         except KeyboardInterrupt:
             br()
             info("Cancelled.")
             br()
             return
+
+    available_formats = get_format_names()
+    output_format = parsed.get("format")
+    if not output_format:
+        try:
+            sys.stdout.write(f"  Output Format [{available_formats}]: ")
+            sys.stdout.flush()
+            output_format = input().strip()
+            if not output_format:
+                output_format = "jsonl"
+        except KeyboardInterrupt:
+            br()
+            info("Cancelled.")
+            br()
+            return
+
+    if output_format.lower() not in FORMATTERS:
+        fail(f"Invalid format: {output_format}. Available: {available_formats}")
+
+    output_format = output_format.lower()
 
     private_key = parsed.get("private-key")
     if not private_key:
@@ -75,18 +98,19 @@ def run(args):
         fail("Private key is required")
 
     source_path = Path(source).expanduser().resolve()
-    destination_path = Path(destination).expanduser().resolve()
+    dest_dir = Path(destination).expanduser().resolve()
 
     if not source_path.exists():
         fail(f"Source file not found: {source}")
 
     try:
-        destination_path.parent.mkdir(parents=True, exist_ok=True)
+        dest_dir.mkdir(parents=True, exist_ok=True)
     except Exception:
-        fail("Could not create destination folder. Check permissions.")
+        fail("Could not create destination directory. Check permissions.")
 
     cfg["source"] = str(source_path)
-    cfg["destination"] = str(destination_path)
+    cfg["destination"] = str(dest_dir)
+    cfg["format"] = output_format
     save_config(cfg)
 
     keys.save_private_key(private_key)
@@ -94,5 +118,5 @@ def run(args):
     print()
     print(f"{G}{OK}{R} Saved!")
     print()
-    print(f"  Run {W}fsi decrypt{R} to decrypt messages")
+    print(f"  Run {W}fsd decrypt{R} to decrypt messages")
     print()

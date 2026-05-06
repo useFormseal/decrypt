@@ -1,12 +1,10 @@
 # Security Policy
 
-> **⚠️ Deprecated**: This project is no longer maintained. Please use [useFormseal/decrypt](https://github.com/useFormseal/decrypt) instead.
-
 ## Supported versions
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.1.x   | :white_check_mark: |
+| Latest  | :white_check_mark: |
 
 
 ## Reporting vulnerabilities
@@ -34,7 +32,7 @@ Include:
 
 ## Credential storage
 
-formseal-inbox stores sensitive data (private key) in your operating system's secure credential storage:
+formseal-decrypt stores sensitive data (private key) in your operating system's secure credential storage:
 
 | OS | Storage location |
 |---|------------------|
@@ -53,7 +51,7 @@ formseal-inbox stores sensitive data (private key) in your operating system's se
 If the OS keychain is unavailable, the private key is stored in base64-encoded JSON at:
 
 ```
-~/.config/formseal-inbox/secrets.json
+~/.config/formseal-decrypt/secrets.json
 ```
 
 :warning: **This fallback is NOT secure.** Base64 encoding is not encryption. Any process with access to this file can read the credentials.
@@ -68,13 +66,14 @@ This mode should only be used in environments where secure credential storage (k
 |------|-----------|----------|
 | Private Key | Encrypted | OS Keychain (preferred) or secrets.json |
 | Source path | Plaintext | config.json |
-| Destination path | Plaintext | config.json |
+| Destination dir | Plaintext | config.json |
+| Output format | Plaintext | config.json |
 
 ---
 
 ## Security considerations
 
-- **Key visibility**: `fsi status` masks the key location, not the key itself
+- **Key visibility**: `fsd status` masks the key location, not the key itself
 - **No telemetry**: The tool does not send usage data, analytics, or logs externally
 - **Local operation**: All decryption happens locally on your machine
 
@@ -82,7 +81,7 @@ This mode should only be used in environments where secure credential storage (k
 
 ## Threat model
 
-formseal-inbox is a local CLI tool. It assumes:
+formseal-decrypt is a local CLI tool. It assumes:
 
 - The system is trusted by the user
 - The user account is not compromised
@@ -98,7 +97,7 @@ It does **NOT** protect against:
 ## Best practices
 
 1. **Keep your private key secret** — never share it
-2. **Use `fsi disconnect`** when done, especially on shared machines
+2. **Use `fsd disconnect`** when done, especially on shared machines
 3. **Store decrypted output securely** — it contains plain form data
 
 ---
@@ -106,7 +105,7 @@ It does **NOT** protect against:
 ## Clearing credentials
 
 ```bash
-fsi disconnect
+fsd disconnect
 ```
 
 This deletes:

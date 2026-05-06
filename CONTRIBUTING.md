@@ -1,6 +1,4 @@
-# Contributing to formseal-inbox
-
-> **⚠️ Deprecated**: This project is no longer maintained. Please contribute to [useFormseal/decrypt](https://github.com/useFormseal/decrypt) instead.
+# Contributing to formseal-decrypt
 
 Thanks for your interest in contributing! Contributions of all kinds are welcome — bug fixes, new features, docs, and more.
 
@@ -10,8 +8,8 @@ Thanks for your interest in contributing! Contributions of all kinds are welcome
 
 1. Fork the repository and clone your fork:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/formseal-inbox.git
-   cd formseal-inbox
+   git clone https://github.com/useFormseal/decrypt.git
+   cd decrypt
    ```
 
 2. Install in development mode using `pipx` (recommended) or `pip`:
@@ -21,7 +19,7 @@ Thanks for your interest in contributing! Contributions of all kinds are welcome
 
 3. Verify it works:
    ```bash
-   fsi
+   fsd
    ```
 
 > **Note:** Always use `pipx install -e .` for local dev — it gives you an isolated environment and the version header will display correctly from source.
@@ -31,21 +29,22 @@ Thanks for your interest in contributing! Contributions of all kinds are welcome
 ## Project structure
 
 ```
-formseal-inbox/
-├── fsi/
-│   ├── fsi.py               # Entry point, argument dispatch
+formseal-decrypt/
+├── fsd/
+│   ├── fsd.py               # Entry point, argument dispatch
 │   ├── cmd.py               # Command registry
-│   ├── ui/                 # Terminal output helpers
-│   ├── commands/           # CLI commands
-│   │   ├── config/         # Config management
-│   │   ├── connect/       # Setup command
-│   │   ├── decrypt/       # Decrypt command
-│   │   └── general/      # About, help, version
-│   ├── security/         # Key storage
-│   └── general/          # Aliases, errors
-├── .github/              # GitHub workflows, issue templates
-├── pyproject.toml       # Package config
-└── version.txt          # Version (single source of truth)
+│   ├── ui/                  # Terminal output helpers
+│   ├── commands/            # CLI commands
+│   │   ├── config/          # Config management
+│   │   ├── connect/         # Setup command
+│   │   ├── decrypt/         # Decrypt command
+│   │   └── general/         # About, help, version
+│   ├── formats/             # Output format handlers
+│   ├── security/            # Key storage
+│   └── general/             # Aliases, errors
+├── .github/                 # GitHub workflows, issue templates
+├── pyproject.toml          # Package config
+└── version.txt             # Version (single source of truth)
 ```
 
 ---
@@ -56,7 +55,7 @@ The version string lives in **`version.txt`** and is the single source of truth.
 
 1. Update `version.txt` with your proposed version (e.g., `0.2.0`)
 2. The GitHub Actions workflow will automatically inject this into:
-   - `fsi/commands/general/version.py`
+   - `fsd/commands/general/version.py`
    - `pyproject.toml`
 
 ---
@@ -66,6 +65,17 @@ The version string lives in **`version.txt`** and is the single source of truth.
 - No comments unless absolutely necessary
 - Follow existing patterns in the codebase
 - Keep it simple
+
+---
+
+## Adding new output formats
+
+To add a new output format:
+
+1. Create `fsd/formats/{format_name}.py` with a class inheriting from `Formatter`
+2. Define `name` and `extension` class attributes
+3. Implement `write(data, path)` method
+4. Register in `fsd/formats/__init__.py`
 
 ---
 
@@ -92,8 +102,8 @@ The version string lives in **`version.txt`** and is the single source of truth.
 
 Test manually:
 ```bash
-fsi connect source:test.jsonl destination:decrypted.jsonl private-key:testkey
-fsi decrypt
+fsd connect source:test.jsonl destination:. private-key:testkey
+fsd decrypt
 ```
 
 ---
@@ -120,4 +130,4 @@ If you find a security vulnerability, please report it privately via GitHub Secu
 
 ---
 
-Please star the repo if you find formseal-inbox useful!
+Please star the repo if you find formseal-decrypt useful!
