@@ -1,0 +1,110 @@
+# Configuration
+
+This document explains formseal-decrypt's configuration files and storage locations.
+
+---
+
+## Configuration directory
+
+All configuration is stored in:
+
+```
+~/.config/formseal-decrypt/
+```
+
+| File | Contents | Format |
+|------|----------|--------|
+| `config.json` | Source, destination, format | Plain JSON |
+| `secrets.json` | Private key | Base64-encoded JSON (fallback only) |
+
+---
+
+## config.json
+
+Created when you run `fsd connect`. Contains non-sensitive configuration:
+
+```json
+{
+  "source": "/path/to/ciphertexts.jsonl",
+  "destination": "/path/to/output",
+  "format": "jsonl"
+}
+```
+
+**Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `source` | string | Full path to ciphertext file |
+| `destination` | string | Directory for decrypted output |
+| `format` | string | Output format (`jsonl` or `json`) |
+
+### Modifying configuration
+
+Edit `config.json` directly or reconnect:
+
+```bash
+fsd disconnect
+fsd connect source:ciphertexts.jsonl destination:. private-key:YOUR_KEY format:json
+```
+
+---
+
+## secrets.json
+
+**Only exists** if OS keychain is unavailable and fallback was triggered. Contains base64-encoded private key:
+
+```json
+{
+  "private-key": "cHJpdmF0ZS1rZXktaGVyZQ=="
+}
+```
+
+**Note**: This file is not encrypted — only base64 encoded. It exists as a last-resort fallback.
+
+---
+
+## OS keychain
+
+Credentials stored in OS keychain are **encrypted** by the operating system:
+
+- **Windows**: `cmdkey` or Credential Manager
+- **macOS**: `security find-internet-password`
+- **Linux**: `secret-tool` or DBus Secret Service
+
+You can view stored credentials via OS utilities, but formseal-decrypt manages them automatically.
+
+---
+
+## Runtime behavior
+
+1. On `fsd connect`: Private key saved to OS keychain (preferred) or secrets.json (fallback)
+2. On `fsd decrypt`: Private key loaded from OS keychain first, then secrets.json
+3. On `fsd disconnect`: Private key deleted from both OS keychain and secrets.json
+
+---
+
+## Environment variables
+
+formseal-decrypt does **not** use environment variables for configuration. All settings are stored in the config directory.
+
+---
+
+## Removing configuration
+
+```bash
+fsd disconnect
+```
+
+This removes:
+- `config.json`
+- `secrets.json` (if exists)
+- Private key from OS keychain
+
+The output folder and its contents are **not** affected.
+
+To remove everything including decrypted messages:
+
+```bash
+fsd disconnect --wipe
+```

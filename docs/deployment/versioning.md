@@ -1,0 +1,53 @@
+# Versioning
+
+Every decrypted payload includes a `version` field. This identifies the schema without requiring decryption.
+
+---
+
+## Current version
+
+`fse.v1.0`
+
+```json
+{
+  "version": "fse.v1.0",
+  "origin": "contact-form",
+  "id": "uuid",
+  "submitted_at": "2024-01-01T00:00:00.000Z",
+  "client_tz": "Europe/London",
+  "data": { ... }
+}
+```
+
+---
+
+## Version support
+
+| Version | Status |
+|---|---|
+| `fse.v1.0` | current |
+| `fse.v1.x` | forward-compatible |
+| anything else | invalid |
+
+All `v1.x` releases share the same envelope structure. Minor increments may add fields inside `data` but won't break existing decryptors.
+
+---
+
+## What version means
+
+- The `version` field is in the plaintext — you can check it before decrypting
+- `fse.v1.0` is the initial version
+- Future versions will increment the minor version (v1.1, v1.2) if the envelope structure stays compatible
+- Incompatible changes would increment the major version (v2.0)
+
+---
+
+## formseal ecosystem
+
+| Tool | Handles versioning |
+|------|-------------------|
+| formseal-embed | Creates versioned payloads |
+| formseal-fetch | Passes through version (doesn't parse) |
+| formseal-decrypt | Validates and decrypts versioned payloads |
+
+See [Concepts → How it works](../concepts/how-it-works.md).

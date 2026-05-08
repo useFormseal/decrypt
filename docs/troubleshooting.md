@@ -1,0 +1,183 @@
+# Troubleshooting
+
+Solutions to common issues with formseal-decrypt.
+
+---
+
+## 1. Installation issues
+
+### "Command not found: fsd"
+
+**Cause**: Package not installed or PATH not updated.
+
+**Solution**:
+
+```bash
+# Verify installation
+pip show formseal-decrypt
+
+# If installed but not found, add Python Scripts to PATH
+# Windows: Add C:\Users\<you>\AppData\Local\Programs\Python\Python314\Scripts to PATH
+# macOS/Linux: Typically added automatically via pip
+```
+
+### "ModuleNotFoundError: No module named 'keyring'"
+
+**Cause**: Keyring package not installed.
+
+**Solution**:
+
+```bash
+pip install keyring
+```
+
+---
+
+## 2. Configuration issues
+
+### "Not configured. Run: fsd connect"
+
+**Cause**: Never connected or configuration deleted.
+
+**Solution**:
+
+```bash
+fsd connect
+```
+
+### "Source file not found"
+
+**Cause**: Source file doesn't exist or path is wrong.
+
+**Solution**:
+
+1. Check the file exists at the path you provided
+2. Verify using `fsd status`
+3. Reconnect with the correct path:
+
+```bash
+fsd disconnect
+fsd connect source:correct-path.jsonl destination:. private-key:YOUR_KEY
+```
+
+---
+
+## 3. Decryption issues
+
+### "Invalid private key"
+
+**Cause**: Private key is not valid base64url-encoded 32-byte key.
+
+**Solution**:
+
+1. Make sure you're using the private key (not public key)
+2. The key should be 40-44 characters when base64url-encoded
+3. Generate a new key pair if needed:
+
+```python
+import base64
+from nacl.public import PrivateKey
+
+key = PrivateKey.generate()
+private = base64.urlsafe_b64encode(bytes(key)).rstrip(b'=').decode()
+public = base64.urlsafe_b64encode(bytes(key.public_key)).rstrip(b'=').decode()
+
+print(f"Private key: {private}")
+print(f"Public key: {public}")
+```
+
+### "Invalid format: missing formseal. prefix"
+
+**Cause**: Ciphertext file doesn't have the expected format. Each line should start with `formseal.`
+
+**Solution**:
+- Verify your source file was created by formseal-fetch
+- Check the file contains lines like `formseal.eyJhbGci...`
+
+### "Some messages could not be decrypted"
+
+**Cause**: Some ciphertexts couldn't be decrypted — likely wrong private key.
+
+**Solution**:
+1. Verify you're using the correct private key
+2. The public key used in formseal-embed must match the private key you're using to decrypt
+3. Reconnect with the correct key:
+
+```bash
+fsd disconnect
+fsd connect source:ciphertexts.jsonl destination:. private-key:CORRECT_KEY
+```
+
+---
+
+## 4. Credential storage issues
+
+### "Private Key Location: Config file"
+
+**Cause**: OS keychain unavailable; fell back to JSON file.
+
+**This is not an error** — credentials still work. This happens when:
+- Running in a container without keyring support
+- Keyring service not available on your Linux distribution
+
+To verify keyring works, see [Security](./concepts/security.md).
+
+### Credentials not persisting after reboot
+
+**Cause**: Likely using fallback JSON storage and file was deleted.
+
+**Solution**:
+1. Reconnect to restore credentials to keychain
+2. Verify "Private Key Location" shows "OS Keychain" in `fsd status`
+
+---
+
+## 5. Output issues
+
+### "Permission denied" when writing to output folder
+
+**Cause**: No write permission to the output directory.
+
+**Solution**:
+
+```bash
+# Check current output folder
+fsd status
+
+# Change to a folder you have write access to
+# Create a new connection with different output path
+fsd disconnect
+fsd connect source:ciphertexts.jsonl destination:/path/you/can/write private-key:YOUR_KEY
+```
+
+### File written but empty
+
+**Cause**: Source file has no valid ciphertexts.
+
+**Solution**: Verify your source file contains `formseal.` prefixed lines.
+
+---
+
+## 6. Keyboard interrupt
+
+### Ctrl+C during interactive prompt
+
+**Behavior**: Prompt cancels gracefully, no changes made.
+
+This is intentional — you can safely interrupt at any prompt.
+
+---
+
+## 7. Still stuck?
+
+1. Run with verbose error output:
+   ```bash
+   fsd decrypt 2>&1
+   ```
+
+2. Check [GitHub Issues](https://github.com/useFormseal/decrypt/issues)
+
+3. Open a new issue with:
+   - Command you ran
+   - Full error message
+   - OS and Python version (`python --version`)
