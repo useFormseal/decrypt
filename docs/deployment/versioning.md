@@ -14,7 +14,6 @@ Every decrypted payload includes a `version` field. This identifies the schema w
   "origin": "contact-form",
   "id": "uuid",
   "submitted_at": "2024-01-01T00:00:00.000Z",
-  "client_tz": "Europe/London",
   "data": { ... }
 }
 ```

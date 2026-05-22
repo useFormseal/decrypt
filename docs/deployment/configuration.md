@@ -37,7 +37,7 @@ Created when you run `fsd connect`. Contains non-sensitive configuration:
 |-------|------|-------------|
 | `source` | string | Full path to ciphertext file |
 | `destination` | string | Directory for decrypted output |
-| `format` | string | Output format (`jsonl` or `json`) |
+| `format` | string | Output format (`jsonl`, `json`, or `md`) |
 
 ### Modifying configuration
 

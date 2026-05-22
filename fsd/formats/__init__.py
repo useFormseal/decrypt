@@ -3,10 +3,12 @@
 from .formatter import Formatter
 from .jsonl import JsonlFormatter
 from .json import JsonFormatter
+from .md import MarkdownFormatter
 
 FORMATTERS: dict[str, type[Formatter]] = {
     "jsonl": JsonlFormatter,
     "json": JsonFormatter,
+    "md": MarkdownFormatter,
 }
 
 
@@ -19,7 +21,7 @@ def get_formatter(format_name: str) -> Formatter:
 
 
 def get_format_names() -> str:
-    return ", ".join(f"{fmt.name} ({fmt})" for fmt in FORMATTERS.values())
+    return ", ".join(fmt.name for fmt in FORMATTERS.values())
 
 
 def get_extension(format_name: str) -> str:

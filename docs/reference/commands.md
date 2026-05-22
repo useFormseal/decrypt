@@ -28,7 +28,7 @@ fsd connect [field:value]...
 |----------|-------------|
 | `source:<path>` | Path to ciphertext file (auto-appends .jsonl if missing) |
 | `destination:<path>` | Directory for decrypted output |
-| `format:<name>` | Output format: `jsonl` or `json` |
+| `format:<name>` | Output format: `jsonl`, `json`, or `md` |
 | `private-key:<key>` | Your private key from formseal-embed |
 
 **Examples:**
@@ -53,7 +53,7 @@ Decrypt ciphertexts from your source file.
 fsd decrypt
 ```
 
-Decrypts all ciphertexts and writes to `formseal.decrypted.{jsonl|json}` in your destination directory.
+Decrypts all ciphertexts and writes to `formseal.decrypted.{jsonl|json|md}` in your destination directory.
 
 **What happens:**
 

@@ -16,7 +16,7 @@ Browser (formseal-embed)
        ▼ (formseal.ct.jsonl)
   fsd decrypt (decrypt locally)
        │
-       ▼ (formseal.decrypted.jsonl/json)
+       ▼ (formseal.decrypted.jsonl/json/md)
   You (read submissions)
 ```
 
@@ -32,7 +32,7 @@ Browser (formseal-embed)
 - Reads ciphertexts from your source file
 - Decrypts each one using your private key (X25519 sealed box)
 - Writes decrypted JSON to your destination directory
-- Supports multiple output formats (JSON Lines, JSON)
+- Supports multiple output formats (JSON Lines, JSON, Markdown)
 - Skips invalid ciphertexts automatically
 - Never sends your private key anywhere
 
@@ -75,6 +75,17 @@ Pretty-printed JSON array — great for reading and debugging:
     }
   }
 ]
+```
+
+### Markdown
+
+Table view — great for quick review in any markdown viewer or text editor:
+
+```markdown
+| id | origin | submitted_at | name | email |
+|---|---|---|---|---|
+| uuid1 | contact-form | 2024-01-15T10:30:00Z | John | john@example.com |
+| uuid2 | contact-form | 2024-01-15T10:31:00Z | Jane | jane@example.com |
 ```
 
 ---

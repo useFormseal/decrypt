@@ -8,6 +8,8 @@ from fsd.commands.config.config import load_config, save_config
 from fsd.security import keys
 from fsd.formats import FORMATTERS, get_format_names
 
+FORMAT_KEYS = {fmt.name.lower(): key for key, fmt in FORMATTERS.items()} | {key: key for key in FORMATTERS}
+
 
 def _parse_args(args):
     parsed = {}
@@ -77,10 +79,10 @@ def run(args):
             br()
             return
 
-    if output_format.lower() not in FORMATTERS:
+    if output_format.lower() not in FORMAT_KEYS:
         fail(f"Invalid format: {output_format}. Available: {available_formats}")
 
-    output_format = output_format.lower()
+    output_format = FORMAT_KEYS[output_format.lower()]
 
     private_key = parsed.get("private-key")
     if not private_key:

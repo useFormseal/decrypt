@@ -46,5 +46,6 @@ Browser (formseal-embed)
 
 - **JSON Lines** — one JSON object per line (default)
 - **JSON** — pretty-printed JSON array
+- **Markdown** — table view, opens in any markdown viewer
 
-Output files are named `formseal.decrypted.jsonl` or `formseal.decrypted.json`.
+Output files are named `formseal.decrypted.{jsonl|json|md}`.
