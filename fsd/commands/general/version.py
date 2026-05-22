@@ -1,6 +1,6 @@
 # commands/general/version.py
 
-VERSION = "0.0.0"
+VERSION = "0.3.0"
 
 
 def run():
