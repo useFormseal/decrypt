@@ -5,9 +5,8 @@ import json
 import sys
 from pathlib import Path
 
-from fsd.ui import br, fail, ok, info, warn, G, W, D, C, Y, R, HEAD, header
+from fsd.ui import br, ok, info, warn, W, D, Y, R, header
 from fsd.security import keys
-from fsd.formats import FORMATTERS
 
 
 CONFIG_DIR = Path.home() / ".config" / "formseal-decrypt"
@@ -26,14 +25,6 @@ def save_config(cfg):
     CONFIG_FILE.write_text(json.dumps(cfg, indent=2))
 
 
-def get_token():
-    pass
-
-
-def get_namespace():
-    pass
-
-
 def run_status():
     cfg = load_config()
 
@@ -41,7 +32,7 @@ def run_status():
     header()
     br()
 
-    print(f"  {D}Configuration Status:{R}")
+    print(f"  {W}Configuration Status:{R}")
     br()
 
     source = cfg.get("source")
@@ -56,18 +47,36 @@ def run_status():
     row("Source:", source)
 
     destination = cfg.get("destination")
-    row("Destination:", destination or "(not set)", W if destination else D)
-
-    output_format = cfg.get("format", "jsonl")
-    formatter = FORMATTERS.get(output_format)
-    format_display = formatter.name if formatter else output_format
-    row("Format:", format_display, G)
+    row("Destination:", destination or "(not set)")
 
     private_key = keys.load_private_key()
     if private_key:
-        row("Private Key:", keys.private_key_location(), G)
+        row("Key Location:", keys.private_key_location())
     else:
-        row("Private Key:", "Not set", D)
+        row("Key Location:", "Not set")
+
+    br()
+
+    source_path = Path(source)
+    jsonl_path = Path(destination) / "formseal.decrypted.jsonl"
+
+    print(f"  {W}Decryption Status:{R}")
+    br()
+
+    source_entries = sum(1 for _ in open(source_path, encoding="utf-8") if _.strip())
+    decrypted_entries = (
+        sum(1 for _ in open(jsonl_path, encoding="utf-8") if _.strip())
+        if jsonl_path.exists()
+        else 0
+    )
+
+    row("Entries in source:", str(source_entries))
+    row("Decrypted entries:", str(decrypted_entries))
+
+    last_decrypt = cfg.get("last_decrypt")
+    if last_decrypt:
+        ts = last_decrypt.split(".")[0].replace("T", " ")
+        row("Last decrypt:", ts)
 
     br()
 
@@ -100,9 +109,10 @@ def run_disconnect(args=None):
     if wipe:
         destination = cfg.get("destination")
         if destination:
-            dest_path = Path(destination)
-            if dest_path.exists():
-                dest_path.unlink()
+            dest_dir = Path(destination)
+            if dest_dir.exists():
+                for f in dest_dir.glob("formseal.decrypted.*"):
+                    f.unlink()
 
     if CONFIG_FILE.exists():
         CONFIG_FILE.unlink()

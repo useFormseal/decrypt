@@ -1,19 +1,34 @@
 # decrypt command
 
 import json
+from datetime import datetime
 from pathlib import Path
 
 import nacl.public
 import nacl.encoding
 
-from fsd.ui import br, fail, ok, info, warn, G, W, D, C, Y, R, HEAD, header
-from fsd.commands.config.config import load_config
+from fsd.ui import br, fail, warn, G, W, D, Y, R, header
+from fsd.commands.config.config import load_config, save_config
 from fsd.security import keys
-from fsd.formats import get_formatter, get_extension
+from fsd.formats import FORMATTERS, get_formatter, get_format_names
+
+
+def _parse_args(args):
+    parsed = {}
+    i = 0
+    while i < len(args):
+        arg = args[i]
+        if arg.startswith("--") and i + 1 < len(args):
+            key = arg[2:]
+            i += 1
+            parsed[key] = args[i]
+        i += 1
+    return parsed
 
 
 def run(args):
     cfg = load_config()
+    cli_args = _parse_args(args)
 
     source = cfg.get("source")
     if not source:
@@ -23,17 +38,23 @@ def run(args):
     if not destination:
         fail("Destination not set. Run: fsd connect")
 
-    output_format = cfg.get("format", "jsonl")
-    formatter = get_formatter(output_format)
+    output_format = cli_args.get("format", cfg.get("format", "jsonl"))
+    if output_format not in FORMATTERS:
+        fail(f"Invalid format. Available: {get_format_names()}")
+    jsonl_formatter = get_formatter("jsonl")
+    jsonl_path = Path(destination) / "formseal.decrypted.jsonl"
+
+    extra_formatter = None
+    extra_path = None
+    if output_format != "jsonl":
+        extra_formatter = get_formatter(output_format)
+        extra_path = Path(destination) / f"formseal.decrypted.{extra_formatter.extension}"
 
     private_key = keys.load_private_key()
     if not private_key:
         fail("Private key not set. Run: fsd connect")
 
     source_path = Path(source)
-    dest_dir = Path(destination)
-    ext = get_extension(output_format)
-    dest_path = dest_dir / f"formseal.decrypted.{ext}"
 
     if not source_path.exists():
         fail(f"Source file not found: {source}")
@@ -46,8 +67,10 @@ def run(args):
         print(f"  {D}{label:<26}{R}{color}{value}{R}")
 
     row("Source:", str(source_path))
-    row("Destination:", str(dest_path))
-    row("Format:", output_format)
+    row("Canonical:", str(jsonl_path))
+    if extra_path:
+        row("Export:", f"{extra_formatter.name} ({extra_path.name})")
+    row("Format:", jsonl_formatter.name if not extra_formatter else extra_formatter.name)
 
     br()
 
@@ -75,7 +98,11 @@ def run(args):
                 failed += 1
 
     if decrypted:
-        formatter.write(decrypted, dest_path)
+        jsonl_formatter.write(decrypted, jsonl_path)
+        if extra_formatter:
+            extra_formatter.write(decrypted, extra_path)
+        cfg["last_decrypt"] = datetime.now().astimezone().isoformat()
+        save_config(cfg)
 
     br()
     row("Processed:", total, G)

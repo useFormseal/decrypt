@@ -1,11 +1,13 @@
 # formats/__init__.py
 
 from .formatter import Formatter
+from .csv import CsvFormatter
 from .jsonl import JsonlFormatter
 from .json import JsonFormatter
 from .md import MarkdownFormatter
 
 FORMATTERS: dict[str, type[Formatter]] = {
+    "csv": CsvFormatter,
     "jsonl": JsonlFormatter,
     "json": JsonFormatter,
     "md": MarkdownFormatter,
@@ -24,5 +26,3 @@ def get_format_names() -> str:
     return ", ".join(fmt.name for fmt in FORMATTERS.values())
 
 
-def get_extension(format_name: str) -> str:
-    return FORMATTERS[format_name].extension

@@ -115,4 +115,4 @@ fsd disconnect --wipe
 
 ## Verifying keychain storage
 
-Run `fsd status` — if "Private Key Location" shows "OS Keychain", your credentials are stored securely.
+Run `fsd status` — if "Key Location" shows "OS Keychain", your credentials are stored securely.

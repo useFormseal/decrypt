@@ -14,10 +14,10 @@ Browser (formseal-embed)
   fsf fetch (download ciphertexts)
        │
        ▼ (formseal.ct.jsonl)
-  fsd decrypt (decrypt locally)
-       │
-       ▼ (formseal.decrypted.jsonl/json/md)
-  You (read submissions)
+   fsd decrypt (decrypt locally)
+        │
+        ▼ (formseal.decrypted.jsonl + optional exports)
+   You (read submissions)
 ```
 
 1. formseal-embed encrypts form submissions in the browser
@@ -32,7 +32,7 @@ Browser (formseal-embed)
 - Reads ciphertexts from your source file
 - Decrypts each one using your private key (X25519 sealed box)
 - Writes decrypted JSON to your destination directory
-- Supports multiple output formats (JSON Lines, JSON, Markdown)
+- Always writes canonical JSONL; supports additional exports (CSV, JSON, Markdown)
 - Skips invalid ciphertexts automatically
 - Never sends your private key anywhere
 
@@ -47,18 +47,20 @@ Browser (formseal-embed)
 
 ---
 
-## Output formats
+## Output model
 
-### JSON Lines (default)
+`fsd decrypt` always writes `formseal.decrypted.jsonl` as the canonical JSONL ledger. Pass `--format` for additional exports.
 
-One JSON object per line — great for streaming and processing:
+### JSON Lines (canonical)
+
+One JSON object per line — append-only ledger, streaming-friendly:
 
 ```json
 {"version": "fse.v1.0", "origin": "contact-form", "id": "uuid", "submitted_at": "2024-01-15T10:30:00Z", "data": {"name": "John"}}
 {"version": "fse.v1.0", "origin": "contact-form", "id": "uuid", "submitted_at": "2024-01-15T10:31:00Z", "data": {"name": "Jane"}}
 ```
 
-### JSON
+### JSON (`--format json`)
 
 Pretty-printed JSON array — great for reading and debugging:
 
@@ -77,7 +79,17 @@ Pretty-printed JSON array — great for reading and debugging:
 ]
 ```
 
-### Markdown
+### CSV (`--format csv`)
+
+Spreadsheet-compatible table — stable column order, formula-safe:
+
+```csv
+id,origin,submitted_at,name,email
+uuid1,contact-form,2024-01-15T10:30:00Z,John,john@example.com
+uuid2,contact-form,2024-01-15T10:31:00Z,Jane,jane@example.com
+```
+
+### Markdown (`--format md`)
 
 Table view — great for quick review in any markdown viewer or text editor:
 

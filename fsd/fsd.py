@@ -14,6 +14,7 @@ from fsd.general.aliases import resolve
 from fsd.general.errors import unknown_command, handle_interrupt, handle_exception
 
 from fsd.commands.general import about as cmd_about
+from fsd.commands.general import formats as cmd_formats
 from fsd.commands.general import help as cmd_help
 from fsd.commands.general import version as cmd_version
 
@@ -41,6 +42,10 @@ def main():
 
     if cmd == "--aliases":
         cmd_help.run_aliases()
+        return
+
+    if cmd == "--formats":
+        cmd_formats.run()
         return
 
     if cmd not in COMMANDS:

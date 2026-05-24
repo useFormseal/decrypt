@@ -3,21 +3,25 @@
 import sys
 from pathlib import Path
 
-from fsd.ui import br, fail, ok, info, warn, G, W, D, C, Y, O, R, HEAD, OK, header
+from fsd.ui import br, fail, info, G, W, R, OK, header
 from fsd.commands.config.config import load_config, save_config
 from fsd.security import keys
-from fsd.formats import FORMATTERS, get_format_names
-
-FORMAT_KEYS = {fmt.name.lower(): key for key, fmt in FORMATTERS.items()} | {key: key for key in FORMATTERS}
 
 
 def _parse_args(args):
     parsed = {}
-    for arg in args:
-        if ":" not in arg:
-            continue
-        key, value = arg.split(":", 1)
-        parsed[key] = value
+    i = 0
+    while i < len(args):
+        arg = args[i]
+        if arg.startswith("--") and i + 1 < len(args):
+            key = arg[2:]
+            i += 1
+            value = args[i]
+            parsed[key] = value
+        elif ":" in arg:
+            key, value = arg.split(":", 1)
+            parsed[key] = value
+        i += 1
     return parsed
 
 
@@ -31,8 +35,6 @@ def run(args):
     print()
     header("setup")
     print()
-
-    cfg = load_config()
 
     source = parsed.get("source")
     if not source:
@@ -64,26 +66,6 @@ def run(args):
             br()
             return
 
-    available_formats = get_format_names()
-    output_format = parsed.get("format")
-    if not output_format:
-        try:
-            sys.stdout.write(f"  Output Format [{available_formats}]: ")
-            sys.stdout.flush()
-            output_format = input().strip()
-            if not output_format:
-                output_format = "jsonl"
-        except KeyboardInterrupt:
-            br()
-            info("Cancelled.")
-            br()
-            return
-
-    if output_format.lower() not in FORMAT_KEYS:
-        fail(f"Invalid format: {output_format}. Available: {available_formats}")
-
-    output_format = FORMAT_KEYS[output_format.lower()]
-
     private_key = parsed.get("private-key")
     if not private_key:
         try:
@@ -112,7 +94,7 @@ def run(args):
 
     cfg["source"] = str(source_path)
     cfg["destination"] = str(dest_dir)
-    cfg["format"] = output_format
+    cfg["format"] = "jsonl"
     save_config(cfg)
 
     keys.save_private_key(private_key)

@@ -47,13 +47,12 @@ fsd connect
 You'll be prompted for:
 - **Source file** — your ciphertexts (e.g., `formseal.ct.jsonl`)
 - **Destination directory** — where decrypted files go
-- **Output format** — JSON Lines, Pretty JSON, or Markdown
 - **Private key** — your private key from formseal-embed setup
 
-You can also provide these non-interactively:
+You can also provide everything non-interactively:
 
 ```bash
-fsd connect source:ciphertexts.jsonl destination:. private-key:YOUR_KEY format:jsonl
+fsd connect source:ciphertexts.jsonl destination:. private-key:YOUR_KEY
 ```
 
 ### Step 2: Decrypt
@@ -62,7 +61,13 @@ fsd connect source:ciphertexts.jsonl destination:. private-key:YOUR_KEY format:j
 fsd decrypt
 ```
 
-This decrypts all ciphertexts and saves them to `formseal.decrypted.{jsonl|json|md}` based on your chosen format.
+This decrypts all ciphertexts and always writes `formseal.decrypted.jsonl` (canonical ledger). Pass `--format` for an additional export:
+
+```bash
+fsd decrypt --format csv
+fsd decrypt --format json
+fsd decrypt --format md
+```
 
 ### Step 3: Check status
 
@@ -70,7 +75,7 @@ This decrypts all ciphertexts and saves them to `formseal.decrypted.{jsonl|json|
 fsd status
 ```
 
-Shows your source, destination, format, and where credentials are stored.
+Shows your source, destination, key location, entry counts, and last decrypt timestamp.
 
 ---
 

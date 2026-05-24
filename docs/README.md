@@ -42,10 +42,11 @@ Browser (formseal-embed)
   You
 ```
 
-## Supported formats
+## Output model
 
-- **JSON Lines** — one JSON object per line (default)
+`fsd decrypt` always writes `formseal.decrypted.jsonl` as the canonical JSONL ledger. Pass `--format` for additional exports:
+
+- **JSON Lines** — one JSON object per line (canonical)
 - **JSON** — pretty-printed JSON array
+- **CSV** — spreadsheet-compatible table
 - **Markdown** — table view, opens in any markdown viewer
-
-Output files are named `formseal.decrypted.{jsonl|json|md}`.

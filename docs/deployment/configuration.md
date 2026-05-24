@@ -37,7 +37,7 @@ Created when you run `fsd connect`. Contains non-sensitive configuration:
 |-------|------|-------------|
 | `source` | string | Full path to ciphertext file |
 | `destination` | string | Directory for decrypted output |
-| `format` | string | Output format (`jsonl`, `json`, or `md`) |
+| `format` | string | Output format (`csv`, `jsonl`, `json`, or `md`) |
 
 ### Modifying configuration
 
@@ -45,7 +45,7 @@ Edit `config.json` directly or reconnect:
 
 ```bash
 fsd disconnect
-fsd connect source:ciphertexts.jsonl destination:. private-key:YOUR_KEY format:json
+fsd connect source:ciphertexts.jsonl destination:. private-key:YOUR_KEY
 ```
 
 ---

@@ -1,7 +1,7 @@
 # commands/general/help.py
 # Help command - shows all available commands
 
-from fsd.ui import br, header, cmd_line, rule
+from fsd.ui import br, header
 from fsd.ui.styles import C, G, R, W, GRAY
 
 
@@ -14,11 +14,13 @@ def _get_help_groups():
         ],
         "Decrypt": [
             ("fsd decrypt", "decrypt ciphertexts"),
+            ("fsd decrypt --format <fmt>", "override output format"),
         ],
         "Info": [
-            ("fsd status", "show configuration"),
+            ("fsd status", "show configuration and decryption status"),
             ("fsd --version", "show version"),
             ("fsd --aliases", "list shorthand flags"),
+            ("fsd --formats", "list available export formats"),
         ],
         "Docs": [
             ("https://github.com/useFormseal/decrypt", None),
