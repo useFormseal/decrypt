@@ -78,6 +78,10 @@ def run_status():
         ts = last_decrypt.split(".")[0].replace("T", " ")
         row("Last decrypt:", ts)
 
+    last_format = cfg.get("last_format")
+    if last_format:
+        row("Last decrypt format:", last_format)
+
     br()
 
 

@@ -102,6 +102,7 @@ def run(args):
         if extra_formatter:
             extra_formatter.write(decrypted, extra_path)
         cfg["last_decrypt"] = datetime.now().astimezone().isoformat()
+        cfg["last_format"] = jsonl_formatter.name if not extra_formatter else extra_formatter.name
         save_config(cfg)
 
     br()
