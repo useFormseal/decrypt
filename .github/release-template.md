@@ -12,10 +12,6 @@
 
 - 
 
-### Fixes
-
-- 
-
 ### Security
 
 - None.
