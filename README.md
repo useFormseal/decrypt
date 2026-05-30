@@ -59,7 +59,7 @@ Browser (formseal-embed)
  ciphertexts.jsonl ──► Your PC
        │
        ▼ (fsd decrypt)
- formseal.decrypted.jsonl (or .json for pretty output)
+  formseal.decrypted.jsonl (canonical JSONL ledger)
 ```
 
 Your backend stores opaque ciphertext only. `fsf fetch` downloads it. `fsd decrypt` decrypts it offline with your private key.
@@ -83,10 +83,12 @@ Run `fsd --help` for all options.
 
 ## Output Formats
 
-During `fsd connect`, you can choose the output format:
+`fsd decrypt` always writes `formseal.decrypted.jsonl` as the canonical JSONL ledger. Pass `--format` for additional exports:
 
-- **JSON Lines** (`jsonl`) — One JSON object per line
-- **JSON** (`json`) — Pretty-printed JSON array
+- **CSV** — Spreadsheet-compatible
+- **JSONL** — One JSON object per line (canonical)
+- **JSON** — Pretty-printed JSON array
+- **Markdown** — Table view
 
 ---
 

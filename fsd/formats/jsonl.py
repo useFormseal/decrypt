@@ -6,7 +6,7 @@ from .formatter import Formatter
 
 
 class JsonlFormatter(Formatter):
-    name = "JSON Lines"
+    name = "JSONL"
     extension = "jsonl"
 
     def write(self, data: list[dict], path: Path):

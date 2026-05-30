@@ -36,17 +36,17 @@ Browser (formseal-embed)
   fsf fetch
        │
        ▼ (ciphertexts.jsonl)
-  fsd decrypt
-       │
-       ▼ (decrypted.jsonl/json)
-  You
+   fsd decrypt
+        │
+        ▼ (formseal.decrypted.jsonl + optional exports)
+   You
 ```
 
 ## Output model
 
 `fsd decrypt` always writes `formseal.decrypted.jsonl` as the canonical JSONL ledger. Pass `--format` for additional exports:
 
-- **JSON Lines** — one JSON object per line (canonical)
+- **JSONL** — one JSON object per line (canonical)
 - **JSON** — pretty-printed JSON array
 - **CSV** — spreadsheet-compatible table
 - **Markdown** — table view, opens in any markdown viewer

@@ -51,7 +51,7 @@ Browser (formseal-embed)
 
 `fsd decrypt` always writes `formseal.decrypted.jsonl` as the canonical JSONL ledger. Pass `--format` for additional exports.
 
-### JSON Lines (canonical)
+### JSONL (canonical)
 
 One JSON object per line — append-only ledger, streaming-friendly:
 

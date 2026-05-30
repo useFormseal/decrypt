@@ -148,7 +148,6 @@ Show version number.
 
 ```bash
 fsd --version
-fsd version
 ```
 
 ---
@@ -171,12 +170,12 @@ Lists all available shorthand flags:
 
 ---
 
-### --about
+### No-argument
 
 Show project information.
 
 ```bash
-fsd --about
+fsd
 ```
 
 ---

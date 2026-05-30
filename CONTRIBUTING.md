@@ -31,17 +31,14 @@ Thanks for your interest in contributing! Contributions of all kinds are welcome
 ```
 formseal-decrypt/
 ├── fsd/
-│   ├── fsd.py               # Entry point, argument dispatch
-│   ├── cmd.py               # Command registry
+│   ├── cli.py               # Entry point, command dispatch
+│   ├── __main__.py          # python -m fsd support
 │   ├── ui/                  # Terminal output helpers
-│   ├── commands/            # CLI commands
-│   │   ├── config/          # Config management
-│   │   ├── connect/         # Setup command
-│   │   ├── decrypt/         # Decrypt command
-│   │   └── general/         # About, help, version
+│   ├── commands/            # CLI commands (flat)
+│   ├── helpers/             # Aliases, errors
 │   ├── formats/             # Output format handlers
-│   ├── security/            # Key storage
-│   └── general/             # Aliases, errors
+│   └── security/            # Key storage
+├── docs/                    # Documentation
 ├── .github/                 # GitHub workflows, issue templates
 ├── pyproject.toml          # Package config
 └── version.txt             # Version (single source of truth)
@@ -55,7 +52,7 @@ The version string lives in **`version.txt`** and is the single source of truth.
 
 1. Update `version.txt` with your proposed version (e.g., `0.2.0`)
 2. The GitHub Actions workflow will automatically inject this into:
-   - `fsd/commands/general/version.py`
+   - `fsd/commands/version.py`
    - `pyproject.toml`
 
 ---

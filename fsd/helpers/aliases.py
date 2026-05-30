@@ -1,4 +1,4 @@
-# general/aliases.py
+# helpers/aliases.py
 # Command aliases
 
 ALIASES = {

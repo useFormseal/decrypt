@@ -18,17 +18,14 @@ dependencies = [
 ]
 
 [project.scripts]
-fsd = "fsd.fsd:main"
+fsd = "fsd.cli:main"
 
 [tool.setuptools]
 packages = [
     "fsd",
     "fsd.ui",
     "fsd.commands",
-    "fsd.commands.general",
-    "fsd.commands.config",
-    "fsd.commands.connect",
-    "fsd.commands.decrypt",
+    "fsd.helpers",
     "fsd.security",
     "fsd.formats",
 ]

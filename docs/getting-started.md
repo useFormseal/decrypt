@@ -30,8 +30,6 @@ pip install -e .
 
 ```bash
 fsd
-# or
-fsd --about
 ```
 
 ---

@@ -6,7 +6,7 @@ from .formatter import Formatter
 
 
 class JsonFormatter(Formatter):
-    name = "Pretty JSON"
+    name = "JSON"
     extension = "json"
 
     def write(self, data: list[dict], path: Path):

@@ -1,4 +1,4 @@
-# commands/general/help.py
+# commands/help.py
 # Help command - shows all available commands
 
 from fsd.ui import br, header
@@ -23,7 +23,7 @@ def _get_help_groups():
             ("fsd --formats", "list available export formats"),
         ],
         "Docs": [
-            ("https://github.com/useFormseal/decrypt", None),
+            ("https://github.com/useFormseal/decrypt/tree/main/docs", None),
         ],
     }
 
@@ -31,7 +31,7 @@ def _get_help_groups():
 def _show_help():
     groups = _get_help_groups()
     br()
-    header()
+    header("help")
     br()
 
     for group, cmds in groups.items():

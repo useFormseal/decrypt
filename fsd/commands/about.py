@@ -1,4 +1,4 @@
-# commands/general/about.py
+# commands/about.py
 # About command - shows project info
 
 from fsd.ui import br, header, C, G, W, R

@@ -1,11 +1,11 @@
-# commands/config/config.py
+# commands/config.py
 # Config management
 
 import json
 import sys
 from pathlib import Path
 
-from fsd.ui import br, ok, info, warn, W, D, Y, R, header
+from fsd.ui import br, fail, neutral, ok, info, warn, C, W, D, Y, R, WHITE, header
 from fsd.security import keys
 
 
@@ -29,7 +29,7 @@ def run_status():
     cfg = load_config()
 
     br()
-    header()
+    header("status")
     br()
 
     print(f"  {W}Configuration Status:{R}")
@@ -87,16 +87,21 @@ def run_status():
 
 def run_disconnect(args=None):
     args = args or []
+    for a in args:
+        if a.startswith("-") and a != "--wipe":
+            neutral(f"{WHITE}Invalid flag. Run {C}fsd --help{R}{WHITE} for available command flags.{R}")
     wipe = "--wipe" in args
 
+    br()
+    header("disconnect")
+    br()
+
     if wipe:
-        br()
-        print(f"{Y}THIS WILL DELETE EVERYTHING.{R}")
-        print(f"Config, private key, AND decrypted messages will be deleted.")
+        print(f"  {Y}THIS WILL DELETE EVERYTHING.{R}")
+        print(f"  Config, private key, AND decrypted messages will be deleted.")
     else:
-        br()
-        print(f"{Y}This will delete config and private key.{R}")
-        print(f"Decrypted messages will NOT be affected.")
+        print(f"  {Y}This will delete config and private key.{R}")
+        print(f"  Decrypted messages will NOT be affected.")
     br()
     sys.stdout.write(f"  Continue? [y/N]: ")
     sys.stdout.flush()
@@ -125,7 +130,7 @@ def run_disconnect(args=None):
 
     br()
     if wipe:
-        ok("Disconnected. Everything wiped.")
+        ok("Disconnected. Decrypted messages deleted.")
     else:
         ok("Disconnected. Config and private key cleared.")
     br()

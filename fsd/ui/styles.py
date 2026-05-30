@@ -20,6 +20,7 @@ BOLD   = "\x1b[1m"
 DIM    = "\x1b[2m"
 
 RED    = "\x1b[31m"
+ERROR  = "\x1b[38;5;196m"
 WHITE  = "\x1b[37m"
 GRAY   = "\x1b[90m"
 
