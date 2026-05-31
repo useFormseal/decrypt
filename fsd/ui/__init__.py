@@ -1,5 +1,4 @@
-# ui/__init__.py
-# Re-export from styles and bodies
+# ui/__init__ — Re-export UI utilities
 
 from fsd.ui.styles import (
     RESET, BOLD, DIM, RED, ERROR, WHITE, GRAY,

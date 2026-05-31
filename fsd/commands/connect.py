@@ -1,4 +1,4 @@
-# Connect command
+# commands/connect — Interactive and non-interactive connect flow
 
 import sys
 from pathlib import Path
@@ -32,6 +32,7 @@ def _parse_args(args):
 
 
 def run(args):
+    """Configure source, destination, and private key interactively or via args."""
     parsed = _parse_args(args)
 
     cfg = load_config()

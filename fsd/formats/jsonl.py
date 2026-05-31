@@ -1,4 +1,4 @@
-# formats/jsonl.py
+# formats/jsonl — JSONL canonical ledger formatter
 
 import json
 from pathlib import Path
@@ -10,6 +10,7 @@ class JsonlFormatter(Formatter):
     extension = "jsonl"
 
     def write(self, data: list[dict], path: Path):
+        """Write decrypted data as newline-delimited JSON (canonical ledger)."""
         path.parent.mkdir(parents=True, exist_ok=True)
         with open(path, "w", encoding="utf-8") as f:
             for msg in data:

@@ -1,9 +1,12 @@
+# commands/formats — List available export formats
+
 from fsd.formats import FORMATTERS
 from fsd.ui import br, header
 from fsd.ui.styles import G, R, W, GRAY
 
 
 def run():
+    """List available export formats."""
     br()
     header("available export formats")
     br()

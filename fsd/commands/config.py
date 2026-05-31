@@ -1,5 +1,4 @@
-# commands/config.py
-# Config management
+# commands/config — Config management (load, save, status, disconnect)
 
 import json
 import sys
@@ -14,6 +13,7 @@ CONFIG_FILE = CONFIG_DIR / "config.json"
 
 
 def load_config():
+    """Load configuration from ~/.config/formseal-decrypt/config.json."""
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
     if CONFIG_FILE.exists():
         return json.loads(CONFIG_FILE.read_text())
@@ -21,11 +21,13 @@ def load_config():
 
 
 def save_config(cfg):
+    """Save configuration dict to config.json."""
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
     CONFIG_FILE.write_text(json.dumps(cfg, indent=2))
 
 
 def run_status():
+    """Display current configuration and decryption status."""
     cfg = load_config()
 
     br()
@@ -86,6 +88,7 @@ def run_status():
 
 
 def run_disconnect(args=None):
+    """Clear configuration, private key, and optionally decrypted files."""
     args = args or []
     for a in args:
         if a.startswith("-") and a != "--wipe":

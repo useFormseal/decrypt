@@ -1,3 +1,5 @@
+# formats/csv — CSV output formatter
+
 import csv
 import json
 from pathlib import Path
@@ -20,6 +22,7 @@ class CsvFormatter(Formatter):
     extension = "csv"
 
     def write(self, data: list[dict], path: Path):
+        """Write decrypted data as CSV with injection-safe values."""
         path.parent.mkdir(parents=True, exist_ok=True)
         if not data:
             with open(path, "w", encoding="utf-8", newline="") as f:

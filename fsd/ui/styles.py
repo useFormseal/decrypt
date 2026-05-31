@@ -1,4 +1,4 @@
-# ui/styles.py
+# ui/styles — ANSI color and style constants
 
 import os
 import sys

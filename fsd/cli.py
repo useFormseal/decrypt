@@ -1,4 +1,4 @@
-# CLI entry point and command registry
+# cli — Entry point and command registry
 
 import sys
 
@@ -21,6 +21,7 @@ COMMANDS = {
 
 
 def main():
+    """CLI entry point — dispatches to the appropriate command handler."""
     if len(sys.argv) < 2:
         cmd_about.run()
         return

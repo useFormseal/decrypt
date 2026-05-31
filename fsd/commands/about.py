@@ -1,10 +1,10 @@
-# commands/about.py
-# About command - shows project info
+# commands/about — About command (show project info)
 
 from fsd.ui import br, header, C, G, W, R
 
 
 def run():
+    """Show project information (version, license, repository)."""
     br()
     header()
     br()

@@ -1,5 +1,4 @@
-# commands/help.py
-# Help command - shows all available commands
+# commands/help — Help command (show commands and aliases)
 
 from fsd.ui import br, header
 from fsd.ui.styles import C, G, R, W, GRAY
@@ -46,10 +45,12 @@ def _show_help():
 
 
 def run():
+    """Show help with all commands grouped by category."""
     _show_help()
 
 
 def run_aliases():
+    """Show shorthand alias flags (-s, -c, -d)."""
     br()
     header("shorthand aliases")
     br()

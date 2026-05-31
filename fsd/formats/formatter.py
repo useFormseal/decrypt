@@ -1,4 +1,4 @@
-# formats/formatter.py
+# formats/formatter — Abstract base formatter
 
 from abc import ABC, abstractmethod
 from pathlib import Path
@@ -10,4 +10,4 @@ class Formatter(ABC):
 
     @abstractmethod
     def write(self, data: list[dict], path: Path):
-        pass
+        """Write decrypted data to the given path in the target format."""

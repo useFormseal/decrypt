@@ -1,5 +1,4 @@
-# helpers/aliases.py
-# Command aliases
+# helpers/aliases — Command alias resolution
 
 ALIASES = {
     "-s": "status",
@@ -9,6 +8,7 @@ ALIASES = {
 
 
 def resolve(args):
+    """Resolve shorthand aliases (-s, -c, -d) to canonical command names."""
     if not args:
         return args
 

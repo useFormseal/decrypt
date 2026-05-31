@@ -1,4 +1,4 @@
-# decrypt command
+# commands/decrypt — Decrypt ciphertexts from source file
 
 import json
 from datetime import datetime
@@ -34,6 +34,7 @@ def _parse_args(args):
 
 
 def run(args):
+    """Decrypt ciphertexts from source file using configured private key."""
     cfg = load_config()
     cli_args = _parse_args(args)
 

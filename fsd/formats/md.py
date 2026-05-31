@@ -1,4 +1,4 @@
-# formats/md.py
+# formats/md — Markdown table formatter
 
 from pathlib import Path
 from .formatter import Formatter
@@ -9,6 +9,7 @@ class MarkdownFormatter(Formatter):
     extension = "md"
 
     def write(self, data: list[dict], path: Path):
+        """Write decrypted data as a markdown table."""
         if not data:
             return
 
