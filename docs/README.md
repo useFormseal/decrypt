@@ -4,14 +4,14 @@ Welcome to the formseal-decrypt documentation.
 
 | Guide | Description |
 |-------|-------------|
-| [Getting Started](./0. getting-started.md) | Installation and first-time setup |
-| [Commands Reference](./1. commands.md) | All available commands |
-| [Configuration](./2. configuration.md) | Config files and credential storage |
-| [How it works](./3. how-it-works.md) | Decryption flow and output formats |
-| [Output formats](./4. output-formats.md) | Format specs, overwrite policy, CSV safety |
-| [Security](./5. security.md) | Security model, key storage, and threat model |
-| [Versioning](./6. versioning.md) | Payload version schema |
-| [Troubleshooting](./7. troubleshooting.md) | Common issues and solutions |
+| [Getting Started](./0.%20getting-started.md) | Installation and first-time setup |
+| [Commands Reference](./1.%20commands.md) | All available commands |
+| [Configuration](./2.%20configuration.md) | Config files and credential storage |
+| [How it works](./3.%20how-it-works.md) | Decryption flow and output formats |
+| [Output formats](./4.%20output-formats.md) | Format specs, overwrite policy, CSV safety |
+| [Security](./5.%20security.md) | Security model, key storage, and threat model |
+| [Versioning](./6.%20versioning.md) | Payload version schema |
+| [Troubleshooting](./7.%20troubleshooting.md) | Common issues and solutions |
 | [CONTRIBUTING.md](../CONTRIBUTING.md) | Contributing guide |
 | [SECURITY.md](../.github/SECURITY.md) | Security policy |
 
