@@ -71,7 +71,7 @@ Your backend stores opaque ciphertext only. `fsf fetch` downloads it. `fsd decry
 | Command | Description |
 |---------|-------------|
 | `fsd` | Show about / info |
-| `fsd connect` | Configure source, destination, private key, and format |
+| `fsd connect` | Configure source, destination, and private key |
 | `fsd decrypt` | Decrypt ciphertexts |
 | `fsd status` | Show configuration |
 | `fsd disconnect` | Clear credentials |
@@ -81,7 +81,7 @@ Run `fsd --help` for all options.
 
 ---
 
-## Output Formats
+## Output formats
 
 `fsd decrypt` always writes `formseal.decrypted.jsonl` as the canonical JSONL ledger. Pass `--format` for additional exports:
 
@@ -105,11 +105,11 @@ Your private key never leaves your machine. formseal-decrypt:
 
 ## Documentation
 
-- [SECURITY.md](./.github/SECURITY.md) — Security policy
+Full documentation is in the [docs](./docs/README.md) directory.
 
 ---
 
-Please star the repo if you find formseal-decrypt useful.
+⭐ Please star the repo if you find formseal-decrypt useful.
 
 ---
 

@@ -2,21 +2,16 @@
 
 Welcome to the formseal-decrypt documentation.
 
-## Quick links
-
 | Guide | Description |
 |-------|-------------|
-| [Getting Started](./getting-started.md) | Installation and first-time setup |
-| [Commands Reference](./reference/commands.md) | All available commands |
-| [Configuration](./deployment/configuration.md) | Config files and storage |
-| [Troubleshooting](./troubleshooting.md) | Common issues and solutions |
-
-## For developers
-
-| Guide | Description |
-|-------|-------------|
-| [Concepts → How it works](./concepts/how-it-works.md) | How decryption works |
-| [Concepts → Security](./concepts/security.md) | Security model and guarantees |
+| [Getting Started](./0. getting-started.md) | Installation and first-time setup |
+| [Commands Reference](./1. commands.md) | All available commands |
+| [Configuration](./2. configuration.md) | Config files and credential storage |
+| [How it works](./3. how-it-works.md) | Decryption flow and output formats |
+| [Output formats](./4. output-formats.md) | Format specs, overwrite policy, CSV safety |
+| [Security](./5. security.md) | Security model, key storage, and threat model |
+| [Versioning](./6. versioning.md) | Payload version schema |
+| [Troubleshooting](./7. troubleshooting.md) | Common issues and solutions |
 | [CONTRIBUTING.md](../CONTRIBUTING.md) | Contributing guide |
 | [SECURITY.md](../.github/SECURITY.md) | Security policy |
 
@@ -42,11 +37,4 @@ Browser (formseal-embed)
    You
 ```
 
-## Output model
-
-`fsd decrypt` always writes `formseal.decrypted.jsonl` as the canonical JSONL ledger. Pass `--format` for additional exports:
-
-- **JSONL** — one JSON object per line (canonical)
-- **JSON** — pretty-printed JSON array
-- **CSV** — spreadsheet-compatible table
-- **Markdown** — table view, opens in any markdown viewer
+`fsd decrypt` always writes `formseal.decrypted.jsonl` as the canonical JSONL ledger. Pass `--format` for additional exports. See [Output formats](./4. output-formats.md) for details.

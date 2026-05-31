@@ -6,7 +6,7 @@
 
 ### Breaking changes
 
-- None.
+- 
 
 ### Fixes
 
@@ -14,7 +14,7 @@
 
 ### Security
 
-- None.
+- 
 
 ### Improvements
 
