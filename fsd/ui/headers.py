@@ -1,6 +1,6 @@
 # ui/headers — Header and rule rendering
 
-from fsd.ui.styles import C, D, G, R, W, HEAD
+from fsd.ui.styles import C, D, G, R, W, HEAD, BORDER
 
 
 def header(title=""):
@@ -9,9 +9,9 @@ def header(title=""):
         print(f"{C} \u250c\u2500 {HEAD} {R}{W}formseal-decrypt{R}     {D}\\{R}     {W}{title}{R}")
     else:
         print(f"{C} \u250c\u2500 {HEAD} {R}{W}formseal-decrypt{R}")
-    print(G + " " + "\u2500" * 52 + R)
+    print(G + " " + BORDER + R)
 
 
 def rule():
     """Print a horizontal rule line."""
-    print(G + " " + "\u2500" * 52 + R)
+    print(G + " " + BORDER + R)

@@ -2,7 +2,7 @@
 
 from fsd.ui.styles import (
     RESET, BOLD, DIM, RED, ERROR, WHITE, GRAY,
-    O, S, G, C, Y, W, D, R, HEAD, OK
+    O, S, G, C, Y, W, D, R, HEAD, OK, BORDER
 )
 
 from fsd.ui.bodies import br, fail, neutral, ok, info, warn
