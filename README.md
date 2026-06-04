@@ -13,13 +13,13 @@
   Decrypt formseal ciphertexts locally.
 </p>
 
----
+
 
 formseal-decrypt decrypts form submissions downloaded by formseal-fetch. Nothing is decrypted in transit or on the server — only the holder of the private key can read submissions.
 
 formseal-decrypt is not a hosted service or dashboard. It is a CLI decryption utility.
 
----
+
 
 ## Installation
 
@@ -35,7 +35,7 @@ pipx install formseal-decrypt
 pip install formseal-decrypt
 ```
 
----
+
 
 ## Quick start
 
@@ -45,7 +45,7 @@ fsd decrypt
 fsd status
 ```
 
----
+
 
 ## How it works
 
@@ -64,7 +64,7 @@ Browser (formseal-embed)
 
 Your backend stores opaque ciphertext only. `fsf fetch` downloads it. `fsd decrypt` decrypts it offline with your private key.
 
----
+
 
 ## Commands
 
@@ -79,7 +79,7 @@ Your backend stores opaque ciphertext only. `fsf fetch` downloads it. `fsd decry
 
 Run `fsd --help` for all options.
 
----
+
 
 ## Output formats
 
@@ -90,9 +90,11 @@ Run `fsd --help` for all options.
 - **JSON** — Pretty-printed JSON array
 - **Markdown** — Table view
 
----
+
 
 ## Security
+
+> Encryption happens in the browser. The backend stores ciphertext only. formseal-decrypt never sees plaintext it didn't decrypt itself.
 
 Your private key never leaves your machine. formseal-decrypt:
 
@@ -101,17 +103,17 @@ Your private key never leaves your machine. formseal-decrypt:
 - Sends no telemetry, has no analytics
 - Skips already-decrypted messages automatically
 
----
+
 
 ## Documentation
 
 Full documentation is in the [docs](./docs/README.md) directory.
 
----
+
 
 ⭐ Please star the repo if you find formseal-decrypt useful.
 
----
+
 
 ## License
 

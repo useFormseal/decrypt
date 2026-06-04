@@ -4,6 +4,20 @@ Thanks for your interest in contributing! Contributions of all kinds are welcome
 
 ---
 
+## Table of contents
+
+- [Getting started](#getting-started)
+- [Project structure](#project-structure)
+- [Versioning](#versioning)
+- [Code style](#code-style)
+- [Adding new output formats](#adding-new-output-formats)
+- [Submitting changes](#submitting-changes)
+- [Testing](#testing)
+- [Reporting issues](#reporting-issues)
+- [Security](#security)
+
+---
+
 ## Getting started
 
 1. Fork the repository and clone your fork:
@@ -33,15 +47,15 @@ formseal-decrypt/
 ├── fsd/
 │   ├── cli.py               # Entry point, command dispatch
 │   ├── __main__.py          # python -m fsd support
-│   ├── ui/                  # Terminal output helpers
-│   ├── commands/            # CLI commands (flat)
+│   ├── ui/                  # Terminal output helpers (styles, headers, bodies)
+│   ├── commands/            # CLI commands (flat: connect, decrypt, status, disconnect)
 │   ├── helpers/             # Aliases, errors
-│   ├── formats/             # Output format handlers
-│   └── security/            # Key storage
+│   ├── formats/             # Output format handlers (jsonl, csv, json, md)
+│   └── security/            # Key storage (keychain)
 ├── docs/                    # Documentation
 ├── .github/                 # GitHub workflows, issue templates
-├── pyproject.toml          # Package config
-└── version.txt             # Version (single source of truth)
+├── pyproject.toml           # Package config
+└── version.txt              # Version (single source of truth)
 ```
 
 ---
@@ -107,10 +121,7 @@ fsd decrypt
 
 ## Reporting issues
 
-Use the GitHub issue templates:
-- **Bug report** — something isn't working
-- **Question** — need help
-- **Documentation** — docs are wrong or missing
+Report bugs via [GitHub Issues](https://github.com/useFormseal/decrypt/issues/new).
 
 Please include:
 - Steps to reproduce
@@ -125,6 +136,3 @@ If you find a security vulnerability, please report it privately via GitHub Secu
 
 **Do NOT** open a public issue for security vulnerabilities.
 
----
-
-Please star the repo if you find formseal-decrypt useful!
