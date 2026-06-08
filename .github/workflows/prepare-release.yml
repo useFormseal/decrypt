@@ -20,7 +20,7 @@ jobs:
       - name: Read version
         id: version
         run: |
-          VERSION=$(cat version.txt)
+          VERSION=$(cat version)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "::notice::Preparing release for v$VERSION"
 
@@ -61,7 +61,7 @@ jobs:
           cp pyproject.toml dist/fsd/
           cp LICENSE dist/fsd/
           cp README.md dist/fsd/
-          cp version.txt dist/fsd/
+          cp version dist/fsd/
           echo "::endgroup::"
 
           echo "::group::Creating archives"

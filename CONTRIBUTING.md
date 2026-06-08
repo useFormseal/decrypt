@@ -8,7 +8,6 @@ Thanks for your interest in contributing! Contributions of all kinds are welcome
 
 - [Getting started](#getting-started)
 - [Project structure](#project-structure)
-- [Versioning](#versioning)
 - [Code style](#code-style)
 - [Adding new output formats](#adding-new-output-formats)
 - [Submitting changes](#submitting-changes)
@@ -55,21 +54,11 @@ formseal-decrypt/
 ├── docs/                    # Documentation
 ├── .github/                 # GitHub workflows, issue templates
 ├── pyproject.toml           # Package config
-└── version.txt              # Version (single source of truth)
+└── version                  # Version (single source of truth)
 ```
 
 ---
 
-## Versioning
-
-The version string lives in **`version.txt`** and is the single source of truth. The publish workflow reads it and injects it into the code at build time.
-
-1. Update `version.txt` with your proposed version (e.g., `0.2.0`)
-2. The GitHub Actions workflow will automatically inject this into:
-   - `fsd/commands/version.py`
-   - `pyproject.toml`
-
----
 
 ## Code style
 

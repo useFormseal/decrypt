@@ -1,104 +1,52 @@
-# security/keys — Keyring credential storage with JSON fallback
+# security/keys — Credential storage (OS keychain)
 
-import json
-import base64
-from pathlib import Path
+import keyring
 
-try:
-    import keyring
-    HAS_KEYRING = True
-except ImportError:
-    HAS_KEYRING = False
+from fsd.ui.bodies import fail
 
 SERVICE = "formseal-decrypt"
 
-CONFIG_DIR = Path.home() / ".config" / "formseal-decrypt"
-SECRETS_FILE = CONFIG_DIR / "secrets.json"
 
-
-def _ensure_config_dir():
-    CONFIG_DIR.mkdir(parents=True, exist_ok=True)
-
-
-def _load_secrets() -> dict:
-    if not SECRETS_FILE.exists():
-        return {}
+def check_keyring() -> bool:
     try:
-        return json.loads(SECRETS_FILE.read_text())
-    except:
-        return {}
-
-
-def _save_secrets(secrets: dict):
-    if not secrets:
-        if SECRETS_FILE.exists():
-            SECRETS_FILE.unlink()
-        return
-    _ensure_config_dir()
-    SECRETS_FILE.write_text(json.dumps(secrets, indent=2))
+        keyring.get_keyring()
+        keyring.set_password(SERVICE, "__probe__", "probe")
+        keyring.delete_password(SERVICE, "__probe__")
+        return True
+    except Exception:
+        return False
 
 
 def save_private_key(private_key: str) -> bool:
-    """Save private key to OS keyring. Falls back to JSON if keyring fails."""
-    if HAS_KEYRING:
-        try:
-            keyring.set_password(SERVICE, "private-key", private_key)
-            return True
-        except Exception:
-            pass
-
-    secrets = _load_secrets()
-    secrets["private-key"] = base64.b64encode(private_key.encode()).decode()
-    _save_secrets(secrets)
-    return True
+    try:
+        keyring.set_password(SERVICE, "private-key", private_key)
+        return True
+    except Exception:
+        fail("Could not save private key to OS keychain.")
 
 
 def load_private_key() -> str | None:
-    """Load private key from OS keyring. Falls back to JSON if not in keyring."""
-    if HAS_KEYRING:
-        try:
-            key = keyring.get_password(SERVICE, "private-key")
-            if key:
-                return key
-        except Exception:
-            pass
-
-    secrets = _load_secrets()
-    encoded = secrets.get("private-key")
-    if encoded:
-        return base64.b64decode(encoded.encode()).decode().strip()
-    return None
+    try:
+        return keyring.get_password(SERVICE, "private-key")
+    except Exception:
+        fail("Could not read private key from OS keychain.")
 
 
 def delete_private_key():
-    """Delete private key from keyring."""
-    if HAS_KEYRING:
-        try:
-            keyring.delete_password(SERVICE, "private-key")
-            return
-        except Exception:
-            pass
-
-    secrets = _load_secrets()
-    secrets.pop("private-key", None)
-    _save_secrets(secrets)
+    try:
+        keyring.delete_password(SERVICE, "private-key")
+    except Exception:
+        pass
 
 
 def private_key_location() -> str:
-    """Check where private key is stored."""
-    if HAS_KEYRING:
-        try:
-            if keyring.get_password(SERVICE, "private-key"):
-                return "OS Keychain"
-        except Exception:
-            pass
-
-    secrets = _load_secrets()
-    if "private-key" in secrets:
-        return "Config File"
+    try:
+        if keyring.get_password(SERVICE, "private-key"):
+            return "OS Keychain"
+    except Exception:
+        pass
     return "Not set"
 
 
 def clear_all():
-    """Clear all secrets."""
     delete_private_key()

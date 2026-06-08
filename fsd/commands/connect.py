@@ -35,6 +35,19 @@ def run(args):
     """Configure source, destination, and private key interactively or via args."""
     parsed = _parse_args(args)
 
+    if not keys.check_keyring():
+        fail("""No supported credential store found.
+
+          This application requires an OS keyring.
+
+          Supported:
+          - Windows Credential Manager
+          - macOS Keychain
+          - Secret Service (GNOME Keyring)
+          - KWallet
+
+  Headless environments are not currently supported.""")
+
     cfg = load_config()
     if cfg.get("source"):
         br()
